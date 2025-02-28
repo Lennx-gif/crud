@@ -1,31 +1,39 @@
-import React,{useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router';
-//import  {data}  from 'react-router';
+import { Link } from 'react-router-dom';  // Fixed import
 
 function Student() {
-  const [student,setStudent] = useState ([]);
+  const [student, setStudent] = useState([]); // Initialize with empty array
+  
   useEffect(() => {
     axios.get('http://localhost:8081/')
-    .then(res => setStudent(res.data))
-    .catch(err => console.log(err));
+      .then(res => {
+        if (Array.isArray(res.data)) {  // Verify data is an array
+          setStudent(res.data);
+        } else {
+          console.error('Data received is not an array:', res.data);
+          setStudent([]);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        setStudent([]); // Set empty array on error
+      });
   }, []);
 
-
-  const handleDelete = async (id)=>{
-    try{
-      await axios.delete('http://localhost:8081/student'+id)
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete('http://localhost:8081/student' + id)
       window.location.reload()
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
   }
+
   return (
     <div className='d-flex vh-100 bg-primary justify-content-center align-items-center'>
       <div className='w-50 bg-white rounded p-3'>
-        <Link  className='btn btn-success' to={{
-          pathname:"/create",
-        }}>Add +</Link>
+        <Link className='btn btn-success' to="/create">Add +</Link>
         <table className='table'>
           <thead>
             <tr>
@@ -33,29 +41,23 @@ function Student() {
               <th>Email</th>
               <th>Action</th>
             </tr>
-            
           </thead>
-
           <tbody>
-            {
-              student.map((data, i)=>(
-                <tr key={i}>
-                  <td>{data.Name}</td>
-                  <td>{data.Email}</td>
-                  <td>
-                    <Link to= {'/update$data.id'} className='btn btn-primary'>Update</Link>
-                    <button className='btn btn-danger ms-3' onClick={e => handleDelete(data.ID)}>Delete</button>
-
-                  </td>
-                </tr>
-              ))
-            }
+            {Array.isArray(student) && student.map((data, i) => (  // Added Array check
+              <tr key={i}>
+                <td>{data.Name}</td>
+                <td>{data.Email}</td>
+                <td>
+                  <Link to={`/update/${data.id}`} className='btn btn-primary'>Update</Link>  {/* Fixed string interpolation */}
+                  <button className='btn btn-danger ms-3' onClick={() => handleDelete(data.ID)}>Delete</button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
-
       </div>
-    </div> 
-  )
-};
+    </div>
+  );
+}
 
 export default Student;
