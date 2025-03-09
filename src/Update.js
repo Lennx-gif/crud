@@ -25,6 +25,11 @@ function UpdateStudent() {
             <form onSubmit={handleSubmit}>
                 <h2>Update Student</h2>
                 <div className='mb-2'>
+                    <label htmlFor=''>ID</label>
+                    <input type='number' placeholder='Enter ID' className='form-control'/>
+                </div>
+
+                <div className='mb-2'>
                     <label htmlFor=''>Name</label>
                     <input type='text' placeholder='Enter Name'  className='form-control'
                     onChange={e => setName(e.target.value)}/>
@@ -33,6 +38,23 @@ function UpdateStudent() {
                 <div className='mb-2'>
                     <label htmlFor=''>Email</label>
                     <input type='email' placeholder='Enter email' className='form-control'  
+                    onChange={e => setEmail(e.target.value)}/>
+                </div>
+                <div className='mb-2'>
+                    <label htmlFor=''>Registration_Number</label>
+                    <input type='text' placeholder='Enter Registration Number' className='form-control'  
+                    onChange={e => setEmail(e.target.value)}/>
+                </div>
+
+                <div className='mb-2'>
+                    <label htmlFor=''>Course</label>
+                    <input type='text' placeholder='Enter Course' className='form-control'  
+                    onChange={e => setEmail(e.target.value)}/>
+                </div>
+
+                <div className='mb-2'>
+                    <label htmlFor=''>Phone_Number</label>
+                    <input type='number' placeholder='Enter phone number' className='form-control'  
                     onChange={e => setEmail(e.target.value)}/>
                 </div>
                 <button className='btn btn-success'>Update</button>

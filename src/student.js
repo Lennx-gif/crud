@@ -32,24 +32,32 @@ function Student() {
 
   return (
     <div className='d-flex vh-100 bg-primary justify-content-center align-items-center'>
-      <div className='w-50 bg-white rounded p-3'>
+      <div className='w-100 bg-white rounded p-3'>
         <Link className='btn btn-success' to="/create">Add +</Link>
         <table className='table'>
           <thead>
             <tr>
+              <th>ID</th>
               <th>Name</th>
               <th>Email</th>
+              <th>Registration_Number</th>
+              <th>Course</th>
+              <th>Phone_Number</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {Array.isArray(student) && student.map((data, i) => (  // Added Array check
               <tr key={i}>
+                <td>{data.ID}</td>
                 <td>{data.Name}</td>
                 <td>{data.Email}</td>
+                <td>{data.Registration_Number}</td>
+                <td>{data.Course}</td>
+                <td>{data.Phone_Number}</td>
                 <td>
-                  <Link to={`/update/${data.id}`} className='btn btn-primary'>Update</Link>  {/* Fixed string interpolation */}
-                  <button className='btn btn-danger ms-3' onClick={() => handleDelete(data.ID)}>Delete</button>
+                  <Link to={`/update/`} className='btn btn-primary '>Update</Link>  {/* Fixed string interpolation */}
+                  <button className='btn btn-danger ms-0 ' onClick={() => handleDelete(data.ID)}>Delete</button>
                 </td>
               </tr>
             ))}
