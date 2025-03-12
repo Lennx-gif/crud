@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import {  useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+
 
 function UpdateStudent() {
     const [name, setName] = useState('')
@@ -9,25 +10,48 @@ function UpdateStudent() {
     const [course, setCourse] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
     const navigate = useNavigate()
+    const { id } = useParams() // Get id from URL params
 
-    
-    
+    // Fetch student data when component mounts
+    useEffect(() => {
+        const fetchStudent = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8081/student/${id}`)
+                if (response.data) {
+                    setName(response.data.Name)
+                    setEmail(response.data.Email)
+                    setRegNumber(response.data.Registration_Number)
+                    setCourse(response.data.Course)
+                    setPhoneNumber(response.data.Phone_Number)
+                }
+            } catch (err) {
+                console.error('Error fetching student:', err)
+                alert('Failed to load student data')
+            }
+        }
+        fetchStudent()
+    }, [id])
 
-    function handleSubmit(event) {
+    const handleSubmit = async (event) => {
         event.preventDefault()
         
-        axios.put('http://localhost:8081/update/:id', {
-            Name: name,
-            Email: email,
-            Registration_Number: regNumber,
-            Course: course,
-            Phone_Number: phoneNumber
-        })
-        .then(res => {
-            console.log(res)
-            navigate('/')
-        })
-        .catch(err => console.log(err))
+        try {
+            const response = await axios.put(`http://localhost:8081/update/${id}`, {
+                Name: name,
+                Email: email,
+                Registration_Number: regNumber,
+                Course: course,
+                Phone_Number: phoneNumber
+            })
+            
+            if (response.data) {
+                console.log('Update successful:', response.data)
+                navigate('/')
+            }
+        } catch (err) {
+            console.error('Error updating student:', err)
+            alert('Failed to update student')
+        }
     }
 
     return (
@@ -89,7 +113,7 @@ function UpdateStudent() {
                             onChange={e => setPhoneNumber(e.target.value)}
                         />
                     </div>
-                    <button className='btn btn-success'>Update</button>
+                    <button type="submit" className='btn btn-success'>Update</button>
                 </form>
             </div>
         </div>

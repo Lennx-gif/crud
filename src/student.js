@@ -56,7 +56,7 @@ function Student() {
                 <td>{data.Course}</td>
                 <td>{data.Phone_Number}</td>
                 <td>
-                  <Link to={`/update/`} className='btn btn-primary '>Update</Link>  {/* Fixed string interpolation */}
+                  <Link to={`/update/${data.ID}`} className='btn btn-primary '>Update</Link>  {/* Fixed string interpolation */}
                   <button className='btn btn-danger ms-0 ' onClick={() => handleDelete(data.ID)}>Delete</button>
                 </td>
               </tr>
