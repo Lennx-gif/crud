@@ -23,7 +23,7 @@ function Student() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete('http://localhost:8081/student' + id)
+      await axios.delete('http://localhost:8081/student/' + id)
       window.location.reload()
     } catch (err) {
       console.log(err);
