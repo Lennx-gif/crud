@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';  // Fixed import
 
+
 function Student() {
   const [student, setStudent] = useState([]); // Initialize with empty array
   
@@ -34,6 +35,10 @@ function Student() {
     <div className='d-flex vh-100 bg-primary justify-content-center align-items-center'>
       <div className='w-100 bg-white rounded p-3'>
         <Link className='btn btn-success' to="/create">Add +</Link>
+        <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4"> </div>
+      <div></div>
+    </div>
+        
         <table className='table'>
           <thead>
             <tr>
@@ -64,7 +69,6 @@ function Student() {
           </tbody>
         </table>
       </div>
-    </div>
   );
 }
 
